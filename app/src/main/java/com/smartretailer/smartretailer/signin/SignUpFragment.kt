@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.smartretailer.smartretailer.R
 import com.smartretailer.smartretailer.databinding.FragmentSignInBinding
@@ -29,6 +30,7 @@ class SignUpFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
         viewModel = ViewModelProvider(this).get(SignUpViewModel::class.java)
         binding.signupbutton.setOnClickListener{
             if (binding.signuppasswordinput.editText!!.text.toString().isEmpty())
