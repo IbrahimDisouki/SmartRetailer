@@ -57,7 +57,7 @@ class SignUpFragment : Fragment() {
             findNavController().navigate(R.id.action_signUpFragment_to_mainFragment)
         }
         viewModel.triggererror.observe(viewLifecycleOwner){
-            binding.signupconfirmpasswordinput.error="email is already in use"
+            binding.signupemailinput.error="email is already in use"
         }
     }
 

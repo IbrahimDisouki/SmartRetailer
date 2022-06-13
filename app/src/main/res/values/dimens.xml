@@ -11,4 +11,7 @@
     <dimen name="signinpasswordwidth">320dp</dimen>
     <dimen name="signinpasswordmargintop">29dp</dimen>
     <dimen name="signupmargintop">29dp</dimen>
+    <dimen name="signinbuttonwidth">220dp</dimen>
+    <dimen name="signinbuttonheights">50dp</dimen>
+    <dimen name="signinlayoutsingupbuttonmargintop">32dp</dimen>
 </resources>
