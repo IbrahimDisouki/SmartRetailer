@@ -10,4 +10,5 @@
     <dimen name="signinemailheight">62dp</dimen>
     <dimen name="signinpasswordwidth">320dp</dimen>
     <dimen name="signinpasswordmargintop">29dp</dimen>
+    <dimen name="signupmargintop">29dp</dimen>
 </resources>
