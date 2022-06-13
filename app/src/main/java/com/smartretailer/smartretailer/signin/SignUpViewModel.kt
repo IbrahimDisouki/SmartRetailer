@@ -10,6 +10,7 @@ import com.smartretailer.smartretailer.repository.Repository
 
 class SignUpViewModel : ViewModel() {
     var triggertransition= MutableLiveData<Boolean>()
+    var triggererror = MutableLiveData<Boolean>()
 
 
     val repo=Repository()
@@ -18,6 +19,9 @@ class SignUpViewModel : ViewModel() {
        repo.signup(user)
         repo.triggersignup.observeForever {
             triggertransition.value = true
+        }
+        repo.triggeremailerror.observeForever{
+            triggererror.value=true
         }
 
     }

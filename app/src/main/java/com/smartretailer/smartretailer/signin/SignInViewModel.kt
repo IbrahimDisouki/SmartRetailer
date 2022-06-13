@@ -8,6 +8,7 @@ import com.smartretailer.smartretailer.repository.Repository
 
 class SignInViewModel : ViewModel() {
     var triggertransition= MutableLiveData<Boolean>()
+    var wrongsignininfo = MutableLiveData<Boolean>()
 
 
     val repo= Repository()
@@ -16,6 +17,9 @@ class SignInViewModel : ViewModel() {
         repo.signin(user)
         repo.triggersignin.observeForever {
             triggertransition.value = true
+        }
+        repo.triggersigninerror.observeForever{
+            wrongsignininfo.value=true
         }
 
     }

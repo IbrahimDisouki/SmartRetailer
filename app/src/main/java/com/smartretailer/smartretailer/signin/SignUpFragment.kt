@@ -37,6 +37,9 @@ class SignUpFragment : Fragment() {
             {
                 binding.signupconfirmpasswordinput.error="Please enter E-mail"
             }
+            else if(binding.signuppasswordinput.editText!!.text.length <6){
+                binding.signupconfirmpasswordinput.error="Password too short"
+            }
             else if (binding.signupemailinput.editText!!.text.toString().isEmpty()){
                 binding.signupconfirmpasswordinput.error="Please enter Password"
             }
@@ -52,6 +55,9 @@ class SignUpFragment : Fragment() {
         }
         viewModel.triggertransition.observe(viewLifecycleOwner) {
             findNavController().navigate(R.id.action_signUpFragment_to_mainFragment)
+        }
+        viewModel.triggererror.observe(viewLifecycleOwner){
+            binding.signupconfirmpasswordinput.error="email is already in use"
         }
     }
 

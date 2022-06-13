@@ -13,14 +13,19 @@ import retrofit2.http.POST
 class BackEnd() {
     val webAPIkey="AIzaSyD0AKakfRkdqEdugRW52coeYc5R1vpc-jU"
      var signup = MutableLiveData<Signup>()
+    var signinerror=MutableLiveData<Boolean>()
+    var emailerror=MutableLiveData<Boolean>()
     var signin = MutableLiveData<Signin>()
     fun signup(user: User)   {
 
     val apiInterface = ApiInterface.create().signup(user)
         apiInterface.enqueue(object :Callback<Signup>{
             override fun onResponse(call: Call<Signup>, response: Response<Signup>) {
-               signup.value=response.body() as Signup
-
+                if(response.body()!=null) {
+                    signup.value = response.body() as Signup
+                }
+                else
+                    emailerror.value=true
             }
 
             override fun onFailure(call: Call<Signup>, t: Throwable) {
@@ -33,8 +38,10 @@ class BackEnd() {
         val apiInterface = ApiInterface.create().signin(user)
         apiInterface.enqueue(object :Callback<Signin>{
             override fun onResponse(call: Call<Signin>, response: Response<Signin>) {
+                if(response.body()!=null)
                 signin.value=response.body() as Signin
-
+               else
+                   signinerror.value=true
             }
 
             override fun onFailure(call: Call<Signin>, t: Throwable) {

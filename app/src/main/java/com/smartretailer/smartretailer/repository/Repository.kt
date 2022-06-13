@@ -9,6 +9,8 @@ import com.smartretailer.smartretailer.helpers.Signup
 
 class Repository() {
     var backend=BackEnd()
+    var triggeremailerror=MutableLiveData<Boolean>()
+    var triggersigninerror=MutableLiveData<Boolean>()
     var triggersignup=MutableLiveData<Signup>()
     var triggersignin=MutableLiveData<Signin>()
     fun signup(user: User) {
@@ -16,11 +18,17 @@ class Repository() {
         backend.signup.observeForever {
             triggersignup.value = it
         }
+        backend.emailerror.observeForever{
+            triggeremailerror.value=true
+        }
     }
     fun signin(user: User) {
         backend.signin(user)
         backend.signin.observeForever {
             triggersignin.value = it
+        }
+        backend.signinerror.observeForever{
+            triggersigninerror.value=true
         }
     }
     }

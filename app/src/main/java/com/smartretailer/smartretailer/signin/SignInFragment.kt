@@ -52,5 +52,8 @@ class SignInFragment : Fragment() {
             }
 
         }
+        viewModel.wrongsignininfo.observeForever{
+            binding.signinpasswordinput.error="wrong email or password"
+        }
     }
 }
