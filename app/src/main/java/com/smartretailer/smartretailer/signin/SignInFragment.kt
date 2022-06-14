@@ -1,6 +1,8 @@
 package com.smartretailer.smartretailer.signin
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,10 +40,38 @@ class SignInFragment : Fragment() {
             if(binding.signinemailinput.editText!!.text.isEmpty())
             {
                 binding.signinemailinput.error="please enter email"
+                binding.signinemailinput.editText!!.addTextChangedListener(object :TextWatcher{
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    }
+
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                        binding.signinemailinput.error=null
+                    }
+
+                    override fun afterTextChanged(p0: Editable?) {
+
+                    }
+
+                })
             }
             else if(binding.signinpasswordinput.editText!!.text.isEmpty())
             {
                 binding.signinpasswordinput.error="please enter password"
+                binding.signinpasswordinput.editText!!.addTextChangedListener(object :TextWatcher{
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    }
+
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                        binding.signinpasswordinput.error=null
+                    }
+
+                    override fun afterTextChanged(p0: Editable?) {
+
+                    }
+
+                })
             }
             else
             {
@@ -52,7 +82,8 @@ class SignInFragment : Fragment() {
             }
 
         }
-        viewModel.wrongsignininfo.observeForever{
+
+        viewModel.wrongsignininfo.observe(viewLifecycleOwner){
             binding.signinpasswordinput.error="wrong email or password"
         }
     }

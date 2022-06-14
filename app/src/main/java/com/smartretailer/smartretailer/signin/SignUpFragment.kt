@@ -2,6 +2,8 @@ package com.smartretailer.smartretailer.signin
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -33,24 +35,99 @@ class SignUpFragment : Fragment() {
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
         viewModel = ViewModelProvider(this).get(SignUpViewModel::class.java)
         binding.signupbutton.setOnClickListener{
-            if (binding.signuppasswordinput.editText!!.text.toString().isEmpty())
+            if (binding.signupemailinput.editText!!.text.toString().isEmpty())
             {
-                binding.signupconfirmpasswordinput.error="Please enter E-mail"
-            }
-            else if(binding.signuppasswordinput.editText!!.text.length <6){
-                binding.signupconfirmpasswordinput.error="Password too short"
+                binding.signupemailinput.error="Please enter E-mail"
+                binding.signupemailinput.editText!!.addTextChangedListener(object : TextWatcher {
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    }
+
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                        binding.signupemailinput.error=null
+                    }
+
+                    override fun afterTextChanged(p0: Editable?) {
+
+                    }
+
+                })
             }
             else if (binding.signupemailinput.editText!!.text.toString().isEmpty()){
                 binding.signuppasswordinput.error="Please enter Password"
+                binding.signuppasswordinput.editText!!.addTextChangedListener(object :TextWatcher{
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    }
+
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                        binding.signuppasswordinput.error=null
+                    }
+
+                    override fun afterTextChanged(p0: Editable?) {
+
+                    }
+
+                })
             }
+            else if(binding.signuppasswordinput.editText!!.text.length <6){
+                binding.signuppasswordinput.error="Password too short"
+                binding.signuppasswordinput.editText!!.addTextChangedListener(object :TextWatcher{
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    }
+
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                        if(binding.signuppasswordinput.editText!!.text.length >=6)
+                        binding.signuppasswordinput.error=null
+                    }
+
+                    override fun afterTextChanged(p0: Editable?) {
+
+                    }
+
+                })
+            }
+
             else if(binding.signupconfirmpasswordinput.editText!!.text.toString().isEmpty()){
                 binding.signupconfirmpasswordinput.error="Please enter Confirm Password"
+                binding.signupconfirmpasswordinput.editText!!.addTextChangedListener(object :TextWatcher{
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    }
+
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                        binding.signupconfirmpasswordinput.error=null
+                    }
+
+                    override fun afterTextChanged(p0: Editable?) {
+
+                    }
+
+                })
             }
             else if(binding.signuppasswordinput.editText!!.text.toString().equals((binding.signupconfirmpasswordinput.editText!!.text.toString()))){
                  viewModel.signup(binding.signupemailinput.editText!!.text.toString(),binding.signuppasswordinput.editText!!.text.toString())
                 }
             else {
                 binding.signupconfirmpasswordinput.error="Password and confirm Password don't match"
+                binding.signupconfirmpasswordinput.editText!!.addTextChangedListener(object :TextWatcher{
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    }
+
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                        if(binding.signuppasswordinput.editText!!.text.toString().equals((binding.signupconfirmpasswordinput.editText!!.text.toString())))
+                        { viewModel.signup(binding.signupemailinput.editText!!.text.toString(),binding.signuppasswordinput.editText!!.text.toString())
+                        binding.signupconfirmpasswordinput.error=null
+                    }
+                    }
+
+                    override fun afterTextChanged(p0: Editable?) {
+
+                    }
+
+                })
             }
         }
         viewModel.triggertransition.observe(viewLifecycleOwner) {
@@ -58,6 +135,20 @@ class SignUpFragment : Fragment() {
         }
         viewModel.triggererror.observe(viewLifecycleOwner){
             binding.signupemailinput.error="email is already in use"
+            binding.signupemailinput.editText!!.addTextChangedListener(object :TextWatcher{
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    binding.signupemailinput.error=null
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+
+                }
+
+            })
         }
     }
 
