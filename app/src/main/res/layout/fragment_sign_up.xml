@@ -35,7 +35,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/signuppasswordinput"
             android:layout_width="@dimen/signuppasswordwidth"
-            android:layout_height="@dimen/signuppasswordheight"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/signupmargintop"
             android:hint="@string/password"
             app:endIconMode="password_toggle"

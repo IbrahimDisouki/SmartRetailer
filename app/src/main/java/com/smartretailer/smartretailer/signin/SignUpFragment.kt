@@ -41,7 +41,7 @@ class SignUpFragment : Fragment() {
                 binding.signupconfirmpasswordinput.error="Password too short"
             }
             else if (binding.signupemailinput.editText!!.text.toString().isEmpty()){
-                binding.signupconfirmpasswordinput.error="Please enter Password"
+                binding.signuppasswordinput.error="Please enter Password"
             }
             else if(binding.signupconfirmpasswordinput.editText!!.text.toString().isEmpty()){
                 binding.signupconfirmpasswordinput.error="Please enter Confirm Password"

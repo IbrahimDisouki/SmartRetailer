@@ -37,7 +37,7 @@ class SignInFragment : Fragment() {
         binding.signinbutton.setOnClickListener {
             if(binding.signinemailinput.editText!!.text.isEmpty())
             {
-                binding.signinpasswordinput.error="please enter email"
+                binding.signinemailinput.error="please enter email"
             }
             else if(binding.signinpasswordinput.editText!!.text.isEmpty())
             {

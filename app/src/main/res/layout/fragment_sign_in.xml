@@ -17,7 +17,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/signinemailinput"
             android:layout_width="@dimen/sininemailwidth"
-            android:layout_height="@dimen/signinemailheight"
+            android:layout_height="wrap_content"
             android:hint="@string/e_mail"
             app:endIconMode="clear_text"
             app:layout_constraintBottom_toBottomOf="parent"
