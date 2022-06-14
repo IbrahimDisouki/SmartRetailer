@@ -131,6 +131,7 @@ class SignUpFragment : Fragment() {
             }
         }
         viewModel.triggertransition.observe(viewLifecycleOwner) {
+            viewModel.triggertransition.removeObservers(viewLifecycleOwner)
             findNavController().navigate(R.id.action_signUpFragment_to_mainFragment)
         }
         viewModel.triggererror.observe(viewLifecycleOwner){

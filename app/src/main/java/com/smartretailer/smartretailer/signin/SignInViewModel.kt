@@ -1,5 +1,6 @@
 package com.smartretailer.smartretailer.signin
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel

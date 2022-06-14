@@ -38,11 +38,14 @@ class BackEnd() {
         val apiInterface = ApiInterface.create().signin(user)
         apiInterface.enqueue(object :Callback<Signin>{
             override fun onResponse(call: Call<Signin>, response: Response<Signin>) {
-                if(response.body()!=null)
-                signin.value=response.body() as Signin
-               else
+                if(response.body()!=null) {
+                    signin.value = response.body() as Signin
+
+                }
+               else{
                    signinerror.value=true
-            }
+                    Log.e("gg","trigger error")
+            }}
 
             override fun onFailure(call: Call<Signin>, t: Throwable) {
             }

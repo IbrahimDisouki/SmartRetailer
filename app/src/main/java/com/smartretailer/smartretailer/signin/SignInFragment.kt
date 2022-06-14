@@ -3,6 +3,7 @@ package com.smartretailer.smartretailer.signin
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -77,7 +78,9 @@ class SignInFragment : Fragment() {
             {
                 viewModel.signin(binding.signinemailinput.editText!!.text.toString(),binding.signinpasswordinput.editText!!.text.toString())
                 viewModel.triggertransition.observe(viewLifecycleOwner){
+                    viewModel.triggertransition.removeObservers(viewLifecycleOwner)
                     findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
+
                 }
             }
 
