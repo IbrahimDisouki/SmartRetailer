@@ -88,6 +88,35 @@ class SignInFragment : Fragment() {
 
         viewModel.wrongsignininfo.observe(viewLifecycleOwner){
             binding.signinpasswordinput.error="wrong email or password"
+            binding.signinpasswordinput.editText!!.addTextChangedListener(object :TextWatcher{
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    binding.signinpasswordinput.error=null
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+
+                }
+
+            })
+            binding.signinemailinput.editText!!.addTextChangedListener(object :TextWatcher{
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    binding.signinpasswordinput.error=null
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+
+                }
+
+            })
+
         }
     }
 }
