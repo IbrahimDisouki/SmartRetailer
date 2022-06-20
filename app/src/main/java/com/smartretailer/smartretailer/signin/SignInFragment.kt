@@ -1,5 +1,7 @@
 package com.smartretailer.smartretailer.signin
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -17,7 +19,7 @@ import com.smartretailer.smartretailer.databinding.FragmentSignInBinding
 
 class SignInFragment : Fragment() {
 
-
+    private val sharedPrefFile = "SmartRetailer"
     private lateinit var viewModel: SignInViewModel
     private var _binding :FragmentSignInBinding? =null
     private val binding get() = _binding!!
@@ -36,6 +38,13 @@ class SignInFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(SignInViewModel::class.java)
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+        val sharedPreferences: SharedPreferences = this.activity!!.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+        if (sharedPreferences.contains(getString(R.string.refreshtoken)))
+            {
+            val refreshtoken=sharedPreferences.getString(getString(R.string.refreshtoken),"gg")
+            viewModel.refreshtoken(refreshtoken)
+                findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
+            }
         binding.signingotosignupbutton.setOnClickListener { findNavController().navigate(R.id.action_signInFragment_to_signUpFragment) }
         binding.signinbutton.setOnClickListener {
             if(binding.signinemailinput.editText!!.text.isEmpty())

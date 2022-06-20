@@ -49,4 +49,7 @@
     <string name="e_mail">E-mail</string>
     <string name="sign_in">Sign In</string>
     <string name="test">test</string>
+    <string name="sharedPrefFilename">SmartRetailer</string>
+    <string name="refreshtoken">refresh_token</string>
+    <string name="sign_out">Sign Out</string>
 </resources>

@@ -10,7 +10,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import com.smartretailer.smartretailer.R
 import com.smartretailer.smartretailer.databinding.FragmentMainBinding
-import com.smartretailer.smartretailer.databinding.FragmentSignInBinding
+import com.smartretailer.smartretailer.helpers.Singedinuser
+
 
 class MainFragment() : Fragment() {
 
@@ -37,7 +38,9 @@ class MainFragment() : Fragment() {
             }
 
         })
+        binding.signoutbutton.setOnClickListener {
 
+        }
 }
 }
 

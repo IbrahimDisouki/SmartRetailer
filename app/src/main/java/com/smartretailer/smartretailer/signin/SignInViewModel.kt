@@ -24,4 +24,9 @@ class SignInViewModel : ViewModel() {
         }
 
     }
+
+    fun refreshtoken(refreshtoken: String?) {
+        repo.refreshtoken(refreshtoken)
+
+    }
 }
