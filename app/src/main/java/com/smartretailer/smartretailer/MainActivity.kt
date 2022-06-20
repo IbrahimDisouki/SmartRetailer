@@ -59,11 +59,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
+        if(Singedinuser.isvalid()){
         val sharedPreferences: SharedPreferences = this.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
         val editor:SharedPreferences.Editor =  sharedPreferences.edit()
         editor.putString(getString(R.string.refreshtoken),Singedinuser.refreshtoken)
         editor.apply()
-        editor.commit()
+        editor.commit()}
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
