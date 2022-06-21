@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -38,6 +39,11 @@ class SignInFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(SignInViewModel::class.java)
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+        activity!!.onBackPressedDispatcher.addCallback(viewLifecycleOwner,object :
+            OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                activity!!.finish()
+            }})
         val sharedPreferences: SharedPreferences = this.activity!!.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
         if (sharedPreferences.contains(getString(R.string.refreshtoken)))
             {
