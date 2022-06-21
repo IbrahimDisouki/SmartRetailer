@@ -1,3 +1,17 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="buttontextsize">20sp</dimen>
+    <dimen name="confirmpasswordwidth">320dp</dimen>
+    <dimen name="signuppasswordheight">62dp</dimen>
+    <dimen name="signuppasswordwidth">320dp</dimen>
+    <dimen name="signupemailheight">62dp</dimen>
+    <dimen name="signupemailwidth">320dp</dimen>
+    <dimen name="sininemailwidth">320dp</dimen>
+    <dimen name="signinemailheight">62dp</dimen>
+    <dimen name="signinpasswordwidth">320dp</dimen>
+    <dimen name="signinpasswordmargintop">29dp</dimen>
+    <dimen name="signupmargintop">29dp</dimen>
+    <dimen name="signinbuttonwidth">220dp</dimen>
+    <dimen name="signinbuttonheights">50dp</dimen>
+    <dimen name="signinlayoutsingupbuttonmargintop">32dp</dimen>
 </resources>

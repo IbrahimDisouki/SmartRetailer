@@ -1,7 +1,9 @@
 package com.smartretailer.smartretailer
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+import android.os.CountDownTimer
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.navigation.findNavController
@@ -10,31 +12,59 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.smartretailer.smartretailer.databinding.ActivityMainBinding
+import com.smartretailer.smartretailer.helpers.Singedinuser
+import com.smartretailer.smartretailer.signin.SignInViewModel
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
-
+    private lateinit var viewModel: MainActivityViewModel
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-
+    private val sharedPrefFile = "SmartRetailer"
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
-
+        viewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
+        viewModel.triggercount()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
+        val navHostFragment=supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main)
 
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
+      //  val navController = findNavController(R.id.nav_host_fragment_content_main)
+        val navController=   navHostFragment!!.findNavController()
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
+        viewModel.triggercount.observe(this){
+            object : CountDownTimer(3600000,1000){
+                override fun onTick(p0: Long) {
+                    //nothing to do with onTick just leave it
+                }
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAnchorView(R.id.fab)
-                .setAction("Action", null).show()
+                override fun onFinish() {
+                    //trigger refreshtoken and resetart the count
+                    viewModel.refreshtoken()
+                    this.start()
+                }
+
+            }.start()
         }
+
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if(Singedinuser.isvalid()){
+        val sharedPreferences: SharedPreferences = this.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+        val editor:SharedPreferences.Editor =  sharedPreferences.edit()
+        editor.putString(getString(R.string.refreshtoken),Singedinuser.refreshtoken)
+        editor.apply()
+        editor.commit()}
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
