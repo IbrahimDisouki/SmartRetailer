@@ -1,3 +1,10 @@
 package com.smartretailer.smartretailer.helpers
 
-data class Signin(var idToken:String, var email:String, var refreshToken:String, var expiresIn:String, var localId:String,var registered:Boolean)
+data class Signin(
+    val idToken: String,
+    val email: String,
+    val refreshToken: String,
+    val expiresIn: String,
+    val localId: String,
+    val registered: Boolean
+)
