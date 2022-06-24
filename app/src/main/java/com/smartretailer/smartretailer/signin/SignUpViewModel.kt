@@ -1,12 +1,12 @@
 package com.smartretailer.smartretailer.signin
 
-import android.provider.ContactsContract
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.smartretailer.smartretailer.helpers.Signup
 import com.smartretailer.smartretailer.helpers.User
 import com.smartretailer.smartretailer.repository.Repository
+import kotlinx.coroutines.launch
 
 class SignUpViewModel : ViewModel() {
     var triggertransition= MutableLiveData<Boolean>()
@@ -15,15 +15,16 @@ class SignUpViewModel : ViewModel() {
 
     val repo=Repository()
     fun signup(email :String ,password:String) {
-        val user=User(email, password)
-       repo.signup(user)
-        repo.triggersignup.observeForever {
-            triggertransition.value = true
-        }
-        repo.triggeremailerror.observeForever{
-            triggererror.value=true
+        val user = User(email, password)
+        viewModelScope.launch {
+            repo.signup(user).fold({ signup: Signup -> triggertransition.value = true },
+                { exception: Throwable ->
+                    triggererror.value = true
+                })
+
         }
 
     }
 
-}
+    }
+
