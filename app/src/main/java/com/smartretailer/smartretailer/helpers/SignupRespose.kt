@@ -1,6 +1,6 @@
 package com.smartretailer.smartretailer.helpers
 
-data class Signup(
+data class SignupRespose(
     val idToken: String,
     val email: String,
     val refreshToken: String,

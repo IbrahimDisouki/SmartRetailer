@@ -3,9 +3,9 @@ package com.smartretailer.smartretailer.signin
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.smartretailer.smartretailer.helpers.Signup
-import com.smartretailer.smartretailer.helpers.User
-import com.smartretailer.smartretailer.repository.Repository
+import com.smartretailer.smartretailer.helpers.AuthenticationRequest
+import com.smartretailer.smartretailer.helpers.SignupRespose
+import com.smartretailer.smartretailer.repository.SignUpRepository
 import kotlinx.coroutines.launch
 
 class SignUpViewModel : ViewModel() {
@@ -13,14 +13,15 @@ class SignUpViewModel : ViewModel() {
     var triggererror = MutableLiveData<Boolean>()
 
 
-    val repo=Repository()
+    val repo = SignUpRepository()
     fun signup(email :String ,password:String) {
-        val user = User(email, password)
+        val authenticationRequest = AuthenticationRequest(email, password)
         viewModelScope.launch {
-            repo.signup(user).fold({ signup: Signup -> triggertransition.value = true },
-                { exception: Throwable ->
-                    triggererror.value = true
-                })
+            repo.signup(authenticationRequest)
+                .fold({ signupRespose: SignupRespose -> triggertransition.value = true },
+                    { exception: Throwable ->
+                        triggererror.value = true
+                    })
 
         }
 

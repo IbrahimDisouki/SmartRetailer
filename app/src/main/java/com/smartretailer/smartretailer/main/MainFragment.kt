@@ -1,22 +1,18 @@
 package com.smartretailer.smartretailer.main
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
-import com.smartretailer.smartretailer.R
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.smartretailer.smartretailer.databinding.FragmentMainBinding
-import com.smartretailer.smartretailer.databinding.FragmentSignInBinding
 
-class MainFragment() : Fragment() {
+class MainFragment : Fragment() {
 
 
     private lateinit var viewModel: MainViewModel
-    private var _binding : FragmentMainBinding? =null
+    private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -30,13 +26,6 @@ class MainFragment() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        activity!!.onBackPressedDispatcher.addCallback(viewLifecycleOwner,object :
-            OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-               activity!!.finish()
-            }
-
-        })
 
 }
 }
