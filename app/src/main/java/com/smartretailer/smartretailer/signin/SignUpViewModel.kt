@@ -8,13 +8,12 @@ import com.smartretailer.smartretailer.helpers.SignupRespose
 import com.smartretailer.smartretailer.repository.SignUpRepository
 import kotlinx.coroutines.launch
 
-class SignUpViewModel : ViewModel() {
-    var triggertransition= MutableLiveData<Boolean>()
+class SignUpViewModel(val repo: SignUpRepository) : ViewModel() {
+    var triggertransition = MutableLiveData<Boolean>()
     var triggererror = MutableLiveData<Boolean>()
 
 
-    val repo = SignUpRepository()
-    fun signup(email :String ,password:String) {
+    fun signup(email: String, password: String) {
         val authenticationRequest = AuthenticationRequest(email, password)
         viewModelScope.launch {
             repo.signup(authenticationRequest)

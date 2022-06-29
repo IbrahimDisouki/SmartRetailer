@@ -20,7 +20,7 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding=FragmentMainBinding.inflate(inflater)
+        _binding = FragmentMainBinding.inflate(inflater)
         return binding.root
     }
 
@@ -29,6 +29,11 @@ class MainFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         Toast.makeText(this.context, "reached maain", Toast.LENGTH_LONG).show()
 
-}
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
 

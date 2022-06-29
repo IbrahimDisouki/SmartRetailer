@@ -3,16 +3,19 @@ package com.smartretailer.smartretailer.signin
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.smartretailer.smartretailer.R
 import com.smartretailer.smartretailer.databinding.FragmentSignInBinding
+import com.smartretailer.smartretailer.repository.provideRetrofit
+import com.smartretailer.smartretailer.repository.provideSignInRemoteDataSourceProvider
+import com.smartretailer.smartretailer.repository.provideSignInRepo
 
 
 class SignInFragment : Fragment() {
@@ -34,20 +37,26 @@ class SignInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(SignInViewModel::class.java)
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                @Suppress("UNCHECKED_CAST")
+                return SignInViewModel(repo = provideSignInRepo(
+                    provideSignInRemoteDataSourceProvider(
+                        provideRetrofit()))) as T
+            }
+        })[SignInViewModel::class.java]
         binding.signingotosignupbutton.setOnClickListener { findNavController().navigate(R.id.action_signInFragment_to_signUpFragment) }
         binding.signinbutton.setOnClickListener {
-            if(binding.signinemailinput.editText!!.text.isEmpty())
-            {
-                binding.signinemailinput.error="please enter email"
-                binding.signinemailinput.editText!!.addTextChangedListener(object :TextWatcher{
+            if (binding.signinemailinput.editText!!.text.isEmpty()) {
+                binding.signinemailinput.error = "please enter email"
+                binding.signinemailinput.editText!!.addTextChangedListener(object : TextWatcher {
                     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
                     }
 
                     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                        binding.signinemailinput.error=null
+                        binding.signinemailinput.error = null
                     }
 
                     override fun afterTextChanged(p0: Editable?) {
@@ -118,5 +127,10 @@ class SignInFragment : Fragment() {
             })
 
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -1,19 +1,21 @@
 package com.smartretailer.smartretailer.signin
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.smartretailer.smartretailer.R
-import com.smartretailer.smartretailer.databinding.FragmentSignInBinding
 import com.smartretailer.smartretailer.databinding.FragmentSignUpBinding
+import com.smartretailer.smartretailer.repository.provideRetrofit
+import com.smartretailer.smartretailer.repository.provideSignUpRemoteDataSourceProvider
+import com.smartretailer.smartretailer.repository.provideSignUpRepo
 
 class SignUpFragment : Fragment() {
 
@@ -33,18 +35,24 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
-        viewModel = ViewModelProvider(this).get(SignUpViewModel::class.java)
-        binding.signupbutton.setOnClickListener{
-            if (binding.signupemailinput.editText!!.text.toString().isEmpty())
-            {
-                binding.signupemailinput.error="Please enter E-mail"
+        viewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                @Suppress("UNCHECKED_CAST")
+                return SignUpViewModel(repo = provideSignUpRepo(
+                    provideSignUpRemoteDataSourceProvider(
+                        provideRetrofit()))) as T
+            }
+        })[SignUpViewModel::class.java]
+        binding.signupbutton.setOnClickListener {
+            if (binding.signupemailinput.editText!!.text.toString().isEmpty()) {
+                binding.signupemailinput.error = "Please enter E-mail"
                 binding.signupemailinput.editText!!.addTextChangedListener(object : TextWatcher {
                     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
                     }
 
                     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                        binding.signupemailinput.error=null
+                        binding.signupemailinput.error = null
                     }
 
                     override fun afterTextChanged(p0: Editable?) {
@@ -142,7 +150,7 @@ class SignUpFragment : Fragment() {
                 }
 
                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                    binding.signupemailinput.error=null
+                    binding.signupemailinput.error = null
                 }
 
                 override fun afterTextChanged(p0: Editable?) {
@@ -151,6 +159,11 @@ class SignUpFragment : Fragment() {
 
             })
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }
