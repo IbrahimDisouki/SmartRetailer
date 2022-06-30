@@ -1,11 +1,13 @@
 package com.smartretailer.smartretailer.signin
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
@@ -83,12 +85,18 @@ class SignInFragment : Fragment() {
 
                 })
             }
-            else
-            {
-                viewModel.signin(binding.signinemailinput.editText!!.text.toString(),binding.signinpasswordinput.editText!!.text.toString())
-                viewModel.triggertransition.observe(viewLifecycleOwner){
+            else {
+                val imm =
+                    activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view.windowToken, 0)
+                binding.loadingView.visibility = View.VISIBLE
+                viewModel.signin(binding.signinemailinput.editText!!.text.toString(),
+                    binding.signinpasswordinput.editText!!.text.toString())
+                viewModel.triggertransition.observe(viewLifecycleOwner) {
                     viewModel.triggertransition.removeObservers(viewLifecycleOwner)
+                    binding.loadingView.visibility = View.GONE
                     findNavController().navigate(R.id.action_signInFragment_to_mainFragment)
+
 
                 }
             }
@@ -96,7 +104,8 @@ class SignInFragment : Fragment() {
         }
 
         viewModel.wrongsignininfo.observe(viewLifecycleOwner){
-            binding.signinpasswordinput.error="wrong email or password"
+            binding.loadingView.visibility = View.GONE
+            binding.signinpasswordinput.error = "wrong email or password"
             binding.signinpasswordinput.editText!!.addTextChangedListener(object :TextWatcher{
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 

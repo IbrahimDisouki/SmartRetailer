@@ -13,4 +13,5 @@
     <dimen name="singupinputfieldmarginend">30dp</dimen>
     <dimen name="singupinputfieldmarginstart">30dp</dimen>
     <dimen name="signupbuttonmargin">120dp</dimen>
+    <dimen name="signupfragmentviewsverticalmargin">16dp</dimen>
 </resources>

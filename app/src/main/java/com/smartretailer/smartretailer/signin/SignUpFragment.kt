@@ -1,11 +1,13 @@
 package com.smartretailer.smartretailer.signin
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
@@ -114,9 +116,14 @@ class SignUpFragment : Fragment() {
 
                 })
             }
-            else if(binding.signuppasswordinput.editText!!.text.toString().equals((binding.signupconfirmpasswordinput.editText!!.text.toString()))){
-                 viewModel.signup(binding.signupemailinput.editText!!.text.toString(),binding.signuppasswordinput.editText!!.text.toString())
-                }
+            else if(binding.signuppasswordinput.editText!!.text.toString().equals((binding.signupconfirmpasswordinput.editText!!.text.toString()))) {
+                val imm =
+                    activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view.windowToken, 0)
+                binding.loadingView.visibility = View.VISIBLE
+                viewModel.signup(binding.signupemailinput.editText!!.text.toString(),
+                    binding.signuppasswordinput.editText!!.text.toString())
+            }
             else {
                 binding.signupconfirmpasswordinput.error="Password and confirm Password don't match"
                 binding.signupconfirmpasswordinput.editText!!.addTextChangedListener(object :TextWatcher{
@@ -139,11 +146,12 @@ class SignUpFragment : Fragment() {
             }
         }
         viewModel.triggertransition.observe(viewLifecycleOwner) {
-            viewModel.triggertransition.removeObservers(viewLifecycleOwner)
+            binding.loadingView.visibility = View.GONE
             findNavController().navigate(R.id.action_signUpFragment_to_mainFragment)
         }
         viewModel.triggererror.observe(viewLifecycleOwner){
-            binding.signupemailinput.error="email is already in use"
+            binding.loadingView.visibility = View.GONE
+            binding.signupemailinput.error = "email is already in use"
             binding.signupemailinput.editText!!.addTextChangedListener(object :TextWatcher{
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
