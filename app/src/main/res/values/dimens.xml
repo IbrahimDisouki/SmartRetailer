@@ -1,3 +1,17 @@
 <resources>
-    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="buttontextsize">20sp</dimen>
+    <dimen name="signupmargintop">29dp</dimen>
+    <dimen name="signinbuttonwidth">220dp</dimen>
+    <dimen name="signinbuttonheights">50dp</dimen>
+    <dimen name="singinlayoutviewsmargin">24dp</dimen>
+    <dimen name="singinemailinputmargingtop">180dp</dimen>
+    <dimen name="singinmarginend">48dp</dimen>
+    <dimen name="signinmarginstart">48dp</dimen>
+    <dimen name="singingotosignupbuttonmargin">140dp</dimen>
+    <dimen name="signinmarginbottom">98dp</dimen>
+    <dimen name="signingotosignupbuttontextsize">16sp</dimen>
+    <dimen name="singupinputfieldmarginend">30dp</dimen>
+    <dimen name="singupinputfieldmarginstart">30dp</dimen>
+    <dimen name="signupbuttonmargin">120dp</dimen>
+    <dimen name="signupfragmentviewsverticalmargin">16dp</dimen>
 </resources>
