@@ -1,6 +1,5 @@
 package com.smartretailer.smartretailer.repository
 
-import android.util.Log
 import com.smartretailer.smartretailer.helpers.AuthenticationRequest
 import com.smartretailer.smartretailer.helpers.SigninRespose
 import kotlinx.coroutines.runBlocking
@@ -44,7 +43,6 @@ class SignInRepositoryTest {
                 val user = it.arguments[0] as AuthenticationRequest
 
                 if (user.email == "Kingam.Ahmed1997@gmail.com" && user.password == "123456789") {
-                    Log.e("gg", user.email)
                     return@thenAnswer SigninRespose("", "", "", "", "", true)
                 } else {
                     throw HttpException(Response.error<ResponseBody>(400,
