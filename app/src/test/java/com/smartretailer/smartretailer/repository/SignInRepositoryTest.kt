@@ -1,12 +1,12 @@
-package com.smartretailer.smartretailer
+package com.smartretailer.smartretailer.repository
 
 import android.util.Log
 import com.smartretailer.smartretailer.helpers.AuthenticationRequest
 import com.smartretailer.smartretailer.helpers.SigninRespose
-import com.smartretailer.smartretailer.repository.SignInRemoteDataSource
 import kotlinx.coroutines.runBlocking
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
@@ -48,7 +48,7 @@ class SignInRepositoryTest {
                     return@thenAnswer SigninRespose("", "", "", "", "", true)
                 } else {
                     throw HttpException(Response.error<ResponseBody>(400,
-                        ResponseBody.create(MediaType.parse("plain/text"), "WRONG CREDENTIALS")))
+                        "WRONG CREDENTIALS".toResponseBody("plain/text".toMediaTypeOrNull())))
                 }
             }
         }
