@@ -39,30 +39,32 @@ class SignUpRepositoryTest {
                 .thenAnswer {
                     val user = it.arguments[0] as AuthenticationRequest
 
-                    if (user.email == "Kingam.Ahmed1997@gmail.com" && user.password == "123456789") {
-                        return@thenAnswer SignupRespose("", "", "", "", "")
-                    } else {
+                    if (user.email == "Kingam.Ahmed1997@gmail.com") {
                         throw HttpException(Response.error<ResponseBody>(400,
-                            "WRONG CREDENTIALS".toResponseBody("plain/text".toMediaTypeOrNull())))
+                            "Email already in use".toResponseBody("plain/text".toMediaTypeOrNull())))
+
+                    } else {
+                        return@thenAnswer SignupRespose("", "", "", "", "")
                     }
                 }
         }
     }
 
     @Test
-    fun test_signin_withcorrectcredentials() {
+    fun test_signup_withcorrectcredentials() {
         val signupRespose = runBlocking {
-            remoteDataSource.signup(AuthenticationRequest("Kingam.Ahmed1997@gmail.com",
-                "123456789"))
+            remoteDataSource.signup(AuthenticationRequest("Kingm.Ahmed1997@gmail.com",
+                "12346789"))
         }
         assertNotNull(signupRespose)
 
     }
 
     @Test(expected = HttpException::class)
-    fun test_signin_withwroncredentials() {
+    fun test_signup_withusedemail() {
         runBlocking {
-            remoteDataSource.signup(AuthenticationRequest("Kingm.Ahmed1997@gmail.com", "123456789"))
+            remoteDataSource.signup(AuthenticationRequest("Kingam.Ahmed1997@gmail.com",
+                "123456789"))
         }
 
     }
